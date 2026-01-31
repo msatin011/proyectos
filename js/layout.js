@@ -370,7 +370,6 @@ function initializeLayout() {
     // --- Rastreo de salas de chat activas ---
     const activeChatRooms = new Set(); // Track active chat rooms for cleanup on disconnect
 
-    // --- Lógica de WebSockets (Socket.io) ---
     function initializeWebSockets() {
         // Evitar conexión duplicada si se ejecuta dentro de un iframe (el Shell ya tiene la conexión)
         if (window.self !== window.top) {
