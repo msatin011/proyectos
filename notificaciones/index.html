@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiPoint-Proyectos-Notificaciones Web Push</title>
+    <style>
+        .logo {
+            width: 25%
+        }
+
+        h1 {
+            color: #46b
+        }
+
+        h2 {
+            color: rgb(40, 209, 225)
+        }
+
+        .gradiente {
+            background: linear-gradient(to bottom, #ddd 0%, #eee 20%, #fff 50%, #eee 80%, #ddd 100%);
+            text-align: center;
+            border: solid 0.4pt #aaa;
+            border-radius: 3px;
+            color: #222 !important;
+            height: 3em;
+            padding: 0.6em;
+            font-family: Tahoma, Verdana, Arial;
+        }
+    </style>
+</head>
+
+<body>
+    <img class='logo' src='icon-512.png'><br>
+    <h1>BiPoint-Proyectos</h1>
+    <h2>Notificaciones</h2>
+
+    <p id="status"></p>
+
+    <button id="subscribeBtn" class='gradiente' disabled>Suscribirse a notificaciones</button>
+    <br><br>
+
+
+    <script>
+        // Verificar soporte para notificaciones y service workers
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+
+            // Advertencia de contexto seguro
+            if (!window.isSecureContext && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                const statusEl = document.getElementById('status');
+                statusEl.textContent = '⚠️ ADVERTENCIA: Estás accediendo por HTTP inseguro. Las notificaciones requieren HTTPS.';
+                statusEl.style.color = 'red';
+                statusEl.style.fontWeight = 'bold';
+            }
+
+            initServiceWorker();
+        } else {
+            document.getElementById('status').textContent = 'Tu navegador no soporta notificaciones push.';
+        }
+
+        async function initServiceWorker() {
+            try {
+                // Registrar el service worker
+                const registration = await navigator.serviceWorker.register('../service-worker-notificaciones.js');
+                console.log('Service Worker registrado.');
+
+                // Habilitar el botón de suscripción
+                document.getElementById('subscribeBtn').disabled = false;
+                document.getElementById('subscribeBtn').disabled = false;
+                document.getElementById('subscribeBtn').addEventListener('click', subscribeToPush);
+
+
+
+                // Mostrar estado actual del permiso si ya está denegado
+                if (Notification.permission === 'denied') {
+                    document.getElementById('status').textContent = '⚠️ Las notificaciones están bloqueadas en este navegador. Debes habilitarlas manualmente en la configuración del sitio (icono de candado o configuración).';
+                    document.getElementById('status').style.color = '#d9534f';
+                }
+
+            } catch (error) {
+                console.error('Error registrando SQ: ' + error.message);
+                document.getElementById('status').textContent = 'Error al registrar el Service Worker: ' + error.message;
+            }
+        }
+
+        async function subscribeToPush() {
+            const registration = await navigator.serviceWorker.ready;
+
+            try {
+                // Solicitar permiso para notificaciones
+                const permission = await Notification.requestPermission();
+
+                if (permission !== 'granted') {
+                    if (permission === 'denied') {
+                        document.getElementById('status').textContent = '❌ Permiso denegado. Debes restablecer los permisos del sitio en la configuración de tu navegador y volver a intentar.';
+                    } else {
+                        document.getElementById('status').textContent = '⚠️ Permiso no otorgado (se cerró el aviso). Intenta de nuevo.';
+                    }
+                    return;
+                }
+
+                // Obtener clave pública del servidor
+                const response = await fetch('/api/vapid-public-key');
+                if (!response.ok) throw new Error('Falló fetch VAPID Key');
+
+                const data = await response.json();
+                if (!data.publicKey) throw new Error('VAPID Key vacía');
+
+                console.log('VAPID Key recibida: ' + data.publicKey.substring(0, 10) + '...');
+
+                // 1. Obtener suscripción actual
+                const existingSubscription = await registration.pushManager.getSubscription();
+
+                // 2. Si existe, desuscribirse
+                if (existingSubscription) {
+                    console.log('Desuscribiendo anterior...');
+                    await existingSubscription.unsubscribe();
+                }
+
+                // 3. Crear nueva suscripción
+                const subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: data.publicKey
+                });
+
+                console.log('Suscripción local exitosa.');
+                document.getElementById('status').textContent = '¡Suscripción exitosa!';
+                document.getElementById('status').style.color = 'green';
+
+                // Obtener parámetros de la URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const usuarioID = urlParams.get('usuarioID');
+                const subusuarioID = urlParams.get('subusuarioID');
+
+                if (!usuarioID || !subusuarioID) {
+                    console.warn('⚠️ FALTAN usuarioID/subusuarioID en URL');
+                    document.getElementById('status').textContent += ' (Advertencia: Faltan datos de usuario)';
+                }
+
+                // Enviar la suscripción a tu servidor
+                await sendSubscriptionToServer(subscription, usuarioID, subusuarioID);
+
+            } catch (error) {
+                console.error('❌ Error fatal: ' + error.message);
+                document.getElementById('status').textContent = 'Error en la suscripción: ' + error.message;
+            }
+        }
+
+        async function sendSubscriptionToServer(subscription, usuarioID, subusuarioID) {
+            const data = {
+                subscription: subscription,
+                usuarioID: usuarioID,
+                subusuarioID: subusuarioID
+            };
+            console.log('Enviando a servidor...');
+
+            try {
+                const response = await fetch('/api/save-subscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    console.log('✅ EXITOSO. Guardado en servidor.');
+                    document.getElementById('status').textContent += '... Guardada en servidor.';
+                } else {
+                    const errText = await response.text();
+                    console.error('❌ Error server: ' + response.status + ' ' + errText);
+                    document.getElementById('status').textContent += '... Error al guardar en servidor.';
+                }
+            } catch (error) {
+                console.error('❌ Error red: ' + error.message);
+                document.getElementById('status').textContent += '... Error de red.';
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario - Administración de Clientes</title>
+    <link rel="stylesheet" href="/css/tailwind.output.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .section {
+            scroll-margin-top: 80px;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .tip-box {
+            border-left: 4px solid #3b82f6;
+            background: #eff6ff;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            border-left: 4px solid #f59e0b;
+            background: #fffbeb;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .success-box {
+            border-left: 4px solid #10b981;
+            background: #f0fdf4;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .bg-manual {
+            background: #28637a;
+            background: linear-gradient(90deg, rgba(40, 99, 122, 1) 0%, rgba(166, 211, 224, 1) 49%, rgba(40, 99, 122, 1) 100%);
+        }
+
+        .nav-btn {
+            display: inline-block;
+            width: 140px;
+            padding: 0.5rem 0.75rem;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(180deg, #aad2eb 0%, #8c9bc4 100%);
+            border: solid 0.5pt 888;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <span style='font-size:20px;color:black'>&#x270D;</span>
+    <!-- Header Removed (Handled by Parent Window Modal) -->
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex flex-wrap justify-center gap-2">
+                <a href="#introduccion" class="nav-btn">Introducción</a>
+                <a href="#gestion" class="nav-btn">ABM Clientes</a>
+                <a href="#contactos" class="nav-btn">Contactos</a>
+                <a href="#importar" class="nav-btn">Importar/Exp.</a>
+                <a href="#faq" class="nav-btn">Preg.Frecuentes</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-5xl">
+
+        <!-- Introducción -->
+        <section id="introduccion" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-info-circle text-4xl text-blue-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Introducción</h2>
+                </div>
+
+                <p class="text-gray-700 text-lg mb-4">
+                    El módulo de <strong>Administración de Clientes</strong> es el centro de gestión de tu cartera de
+                    clientes.
+                    Desde aquí puedes registrar nuevos clientes, actualizar su información comercial, gestionar sus
+                    contactos
+                    y mantener organizados datos clave como CUIT, dirección y tipo de sociedad.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <div class="feature-card bg-blue-50 p-6 rounded-lg border border-blue-200">
+                        <i class="fas fa-users text-3xl text-blue-600 mb-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Cartera de Clientes</h3>
+                        <p class="text-gray-700">Visualiza y gestiona todos tus clientes en un listado ordenable y
+                            filtrable.</p>
+                    </div>
+
+                    <div class="feature-card bg-green-50 p-6 rounded-lg border border-green-200">
+                        <i class="fas fa-file-excel text-3xl text-green-600 mb-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Importación Masiva</h3>
+                        <p class="text-gray-700">Carga múltiples clientes desde Excel para agilizar la puesta en marcha.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gestión (Alta, Baja, Modificación) -->
+        <section id="gestion" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-user-edit text-4xl text-indigo-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Gestión de Clientes</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Alta -->
+                    <div class="border-b pb-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <i class="fas fa-plus-circle text-green-600"></i> Agregar Cliente
+                        </h3>
+                        <p class="text-gray-700 mb-2">Pulsa el botón <strong>Agregar</strong> y completa el formulario
+                            con:</p>
+                        <ul class="list-disc ml-6 text-gray-700 mb-2">
+                            <li><strong>Razón Social:</strong> Nombre legal o comercial.</li>
+                            <li><strong>CUIT:</strong> Solo números (el sistema añade guiones).</li>
+                            <li><strong>Tipo:</strong> Unipersonal, Sociedad, ONG, etc.</li>
+                            <li><strong>Ubicación:</strong> Provincia, Localidad y Dirección.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Modificar -->
+                    <div class="border-b pb-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <i class="fas fa-edit text-blue-600"></i> Modificar Cliente
+                        </h3>
+                        <p class="text-gray-700">Selecciona el cliente en la lista (se pintará de azul) y pulsa
+                            <strong>Modificar</strong>.
+                            Podrás editar cualquiera de sus datos.
+                        </p>
+                    </div>
+
+                    <!-- Eliminar -->
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <i class="fas fa-trash-alt text-red-600"></i> Eliminar Cliente
+                        </h3>
+                        <p class="text-gray-700">Con un cliente seleccionado, pulsa <strong>Eliminar</strong>. Se pedirá
+                            confirmación.</p>
+                        <div class="warning-box mt-2">
+                            <i class="fas fa-exclamation-triangle text-orange-600 mr-2"></i>
+                            <strong>Atención:</strong> Eliminar un cliente podría afectar pedidos o historiales
+                            asociados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contactos -->
+        <section id="contactos" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-address-book text-4xl text-teal-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Gestión de Contactos</h2>
+                </div>
+
+                <p class="text-gray-700 mb-4">
+                    Cada cliente puede tener múltiples contactos (personas dentro de la empresa).
+                    Para verlos, pulsa el botón <strong>Datos Contactos</strong> en la fila correspondiente al cliente.
+                </p>
+
+                <div class="tip-box">
+                    <strong>Funcionalidad:</strong> Se abrirá una ventana donde podrás agregar nuevos contactos (nombre,
+                    cargo, email, celular),
+                    editarlos o desactivarlos.
+                </div>
+            </div>
+        </section>
+
+        <!-- Importar/Exportar -->
+        <section id="importar" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-file-import text-4xl text-gray-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Importar y Exportar</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Importar desde Excel</h4>
+                        <p class="text-gray-700">Usa el botón <strong>Importar</strong> para cargar clientes
+                            masivamente.</p>
+                        <ol class="list-decimal ml-6 text-gray-700 mt-2">
+                            <li>Descarga la <strong>Plantilla</strong> desde la ventana de importación.</li>
+                            <li>Completa los datos respetando las columnas (Nombre, CUIT, Activo, etc.).</li>
+                            <li>Sube el archivo para procesarlo.</li>
+                        </ol>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-bold text-gray-800">Exportar</h4>
+                        <p class="text-gray-700">El botón <strong>Exportar</strong> genera un archivo Excel con el
+                            listado actual de clientes visible en la grilla.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-question-circle text-4xl text-indigo-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Preguntas Frecuentes (FAQ)</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿El CUIT valida formato?
+                        </h4>
+                        <p class="text-gray-700">Sí, el campo CUIT espera 11 dígitos y el sistema automáticamente agrega
+                            los guiones para el formato visual.</p>
+                    </div>
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Qué pasa si borro un cliente con deuda o pedidos?
+                        </h4>
+                        <p class="text-gray-700">Dependiendo de la configuración del sistema, es posible que no se
+                            permita eliminar clientes con historial activo para mantener la integridad de los datos. Se
+                            recomienda desactivarlos en su lugar (desmarcar "Activo").</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Soporte Técnico -->
+        <section class="section mb-12">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-headset text-4xl"></i>
+                    <h2 class="text-3xl font-bold">Soporte Técnico</h2>
+                </div>
+                <p class="text-lg mb-4">Si tienes problemas técnicos o preguntas adicionales, no dudes en contactar al
+                    equipo de soporte.</p>
+                <div id="support-info" class="flex flex-wrap gap-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-envelope"></i>
+                        <span id="support-email">Cargando...</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-phone"></i>
+                        <span id="support-phone">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Sistema de Gestión de Tareas - Manual de Usuario v1.0</p>
+            <p class="text-xs text-gray-400 mt-2">Última actualización: Diciembre 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Load support contact information from database
+        async function loadSupportInfo() {
+            try {
+                const token = sessionStorage.getItem('authToken');
+                if (!token) {
+                    document.getElementById('support-email').textContent = 'soporte@tuempresa.com';
+                    document.getElementById('support-phone').textContent = '+54 11 1234-5678';
+                    return;
+                }
+
+                const response = await fetch('/api/support-info', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('support-email').textContent = data.email || 'soporte@tuempresa.com';
+                    document.getElementById('support-phone').textContent = data.phone || '+54 11 1234-5678';
+                } else {
+                    document.getElementById('support-email').textContent = 'soporte@tuempresa.com';
+                    document.getElementById('support-phone').textContent = '+54 11 1234-5678';
+                }
+            } catch (error) {
+                console.error('Error loading support info:', error);
+                document.getElementById('support-email').textContent = 'soporte@tuempresa.com';
+                document.getElementById('support-phone').textContent = '+54 11 1234-5678';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSupportInfo);
+    </script>
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('nav a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

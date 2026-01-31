@@ -1,0 +1,8 @@
+quiero hacer una app web tipo SAAS para estudios contables, estudios de abogados, estudios de profesionales en general para gestionar proyectos y tareas, del tipo de Project de Microsoft pero mas moderna y con facilidades adicionales. Armame un esquema de las funciones que podria tener, teniendo en cuenta que los destintatarios del SASS son pymes con algunos empleados, en general no mas de 20 y realizan tareas rutinarias con vencimiento para sus clientes, y proyectos a largo plazo con multiples tareas dentro de los mismos. Tene en cuenta que deberia definirse un organigrama dentro del cliente con asignacion a los distintos niveles y usuarios de tareas especificas. Algunas tareas pueden ser compartidas entre usuarios y el nivel jerarquico deberia poder superivisar el avance y los tiempos empleados. Tambien los recursos. Deberia haber una gestion de recursos tambien. Antes de empezar a programar, armame un esquema con diagramas para que sea mas facil de entender
+
+1. que inclucya diagramas de flujo, organigramas y mockups de interfaz, 2. integracion especial para estudios contables con relevamiento automatico de vencimientos nacionales ,provinciales y municipales para los impuestos con vencimiento y las presentaciones tambien ante los distintos organismos, para los estudios profesionales en general deberia tener una herramienta de facturacion automatica a los clientes del estudio y el seguimiento y control de la cuenta corriente. 3.- si distintos niveles de permisos como decis ver/editar/revisar/aprobar por rol dentro del organigrama
+toda la salida hacela en html
+
+crea un manual para asignarolmenu.html (asignacion roles a menues) 
+usando el template guardado en  /templates/manual_template.html y 
+templates/modal_integracion_snippet.html

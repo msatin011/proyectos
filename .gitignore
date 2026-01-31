@@ -1,0 +1,12 @@
+# Node / temporales
+node_modules/
+logs/
+*.log
+
+# Archivos de backup / claves
+*.bak
+temp_keys.txt
+claves_guardar.txt
+
+# Git interno (por si acaso)
+.git/

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario - Asignación de Roles</title>
+    <link rel="stylesheet" href="/css/tailwind.output.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .section {
+            scroll-margin-top: 80px;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .tip-box {
+            border-left: 4px solid #3b82f6;
+            background: #eff6ff;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            border-left: 4px solid #f59e0b;
+            background: #fffbeb;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .success-box {
+            border-left: 4px solid #10b981;
+            background: #f0fdf4;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .bg-manual {
+            background: #28637a;
+            background: linear-gradient(90deg, rgba(40, 99, 122, 1) 0%, rgba(166, 211, 224, 1) 49%, rgba(40, 99, 122, 1) 100%);
+        }
+
+        .nav-btn {
+            display: inline-block;
+            width: 140px;
+            padding: 0.5rem 0.75rem;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(180deg, #aad2eb 0%, #8c9bc4 100%);
+            border: solid 0.5pt 888;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header Removed -->
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex flex-wrap justify-center gap-2">
+                <a href="#introduccion" class="nav-btn">Introducción</a>
+                <a href="#acceso" class="nav-btn">Acceso</a>
+                <a href="#interfaz" class="nav-btn">Interfaz</a>
+                <a href="#asignar" class="nav-btn">Asignar Roles</a>
+                <a href="#eliminar" class="nav-btn">Eliminar Roles</a>
+                <a href="#consejos" class="nav-btn">Consejos</a>
+                <a href="#faq" class="nav-btn">Preg.Frecuentes</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-5xl">
+
+        <!-- Introducción -->
+        <section id="introduccion" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-info-circle text-4xl text-blue-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Introducción</h2>
+                </div>
+
+                <p class="text-gray-700 text-lg mb-4">
+                    El módulo de <strong>Asignación de Roles a Usuarios</strong> es una herramienta intuitiva y visual
+                    que permite
+                    a los administradores gestionar los roles asignados a los usuarios del sistema de manera rápida y
+                    eficiente.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <div class="feature-card bg-blue-50 p-6 rounded-lg border border-blue-200">
+                        <i class="fas fa-hand-pointer text-3xl text-blue-600 mb-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Interfaz Drag & Drop</h3>
+                        <p class="text-gray-700">Arrastra y suelta roles sobre usuarios para asignarlos de forma
+                            inmediata, sin necesidad de formularios complejos.</p>
+                    </div>
+
+                    <div class="feature-card bg-green-50 p-6 rounded-lg border border-green-200">
+                        <i class="fas fa-sync-alt text-3xl text-green-600 mb-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Actualización Instantánea</h3>
+                        <p class="text-gray-700">Los cambios se aplican inmediatamente en la base de datos y se
+                            reflejan en tiempo real en la interfaz.</p>
+                    </div>
+
+                    <div class="feature-card bg-purple-50 p-6 rounded-lg border border-purple-200">
+                        <i class="fas fa-shield-alt text-3xl text-purple-600 mb-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Control de Acceso</h3>
+                        <p class="text-gray-700">Solo usuarios con Rol 0 (Administrador) pueden acceder a este módulo
+                            para garantizar la seguridad.</p>
+                    </div>
+
+                    <div class="feature-card bg-orange-50 p-6 rounded-lg border border-orange-200">
+                        <i class="fas fa-bell text-3xl text-orange-600 mb-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Notificaciones Toast</h3>
+                        <p class="text-gray-700">Recibe confirmaciones visuales de cada acción realizada mediante
+                            notificaciones emergentes elegantes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Acceso al Sistema -->
+        <section id="acceso" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-key text-4xl text-green-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Acceso al Sistema</h2>
+                </div>
+
+                <div class="warning-box">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-exclamation-triangle text-orange-600 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-1">Requisito de Permisos</h4>
+                            <p class="text-gray-700">Solo los usuarios con <strong>Rol 0 (Administrador)</strong>
+                                pueden acceder a este módulo. Si no tienes los permisos necesarios, serás redirigido
+                                automáticamente.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mb-4 mt-6">Pasos para Acceder:</h3>
+
+                <div class="space-y-4">
+                    <div class="flex gap-4">
+                        <div class="step-number bg-blue-600 text-white">1</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Iniciar Sesión</h4>
+                            <p class="text-gray-700">Ingresa al sistema con tus credenciales de administrador (usuario
+                                con Rol 0).</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-blue-600 text-white">2</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Navegar al Módulo</h4>
+                            <p class="text-gray-700">Desde el menú principal, selecciona la opción "Asignación de
+                                Roles" o accede directamente a <code
+                                    class="bg-gray-200 px-2 py-1 rounded">rol.html</code>.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-blue-600 text-white">3</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Verificación Automática</h4>
+                            <p class="text-gray-700">El sistema verificará automáticamente tu token de autenticación y
+                                tus permisos antes de cargar la interfaz.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Descripción de la Interfaz -->
+        <section id="interfaz" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-desktop text-4xl text-purple-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Descripción de la Interfaz</h2>
+                </div>
+
+                <p class="text-gray-700 mb-6">La interfaz está dividida en tres secciones principales:</p>
+
+                <!-- Header Section -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-heading text-blue-600"></i>
+                        1. Barra Superior (Header)
+                    </h3>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-image text-blue-600 mt-1"></i>
+                                <div>
+                                    <strong>Icono de Roles:</strong> Imagen visual que identifica el módulo
+                                    (asignarol.png).
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-text-height text-blue-600 mt-1"></i>
+                                <div>
+                                    <strong>Título:</strong> "Asignación de Roles" - Indica claramente la función del
+                                    módulo.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-sign-out-alt text-red-600 mt-1"></i>
+                                <div>
+                                    <strong>Botón Salir:</strong> Ubicado en la esquina superior derecha, permite
+                                    regresar a la página anterior o al layout principal.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Left Panel -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-user-tag text-blue-600"></i>
+                        2. Panel Izquierdo - Roles Disponibles
+                    </h3>
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                        <p class="text-gray-700 mb-4">Este panel muestra todos los roles que puedes asignar a los
+                            usuarios:</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-palette text-blue-600 mt-1"></i>
+                                <div>
+                                    <strong>Roles con Colores:</strong> Cada rol tiene un color distintivo para
+                                    facilitar su identificación visual:
+                                    <ul class="ml-6 mt-2 space-y-1">
+                                        <li><span class="inline-block w-4 h-4 bg-blue-500 rounded mr-2"></span>Rol 1 -
+                                            Azul</li>
+                                        <li><span class="inline-block w-4 h-4 bg-green-500 rounded mr-2"></span>Rol 2 -
+                                            Verde</li>
+                                        <li><span class="inline-block w-4 h-4 bg-yellow-500 rounded mr-2"></span>Rol 3
+                                            - Amarillo</li>
+                                        <li><span class="inline-block w-4 h-4 bg-purple-500 rounded mr-2"></span>Rol 4
+                                            - Morado</li>
+                                        <li><span class="inline-block w-4 h-4 bg-pink-500 rounded mr-2"></span>Rol 5 -
+                                            Rosa</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-grip-vertical text-blue-600 mt-1"></i>
+                                <div>
+                                    <strong>Icono de Arrastre:</strong> Cada rol muestra un icono de líneas verticales
+                                    que indica que es arrastrable.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-info-circle text-blue-600 mt-1"></i>
+                                <div>
+                                    <strong>Instrucción:</strong> "Arrastra un rol hacia un usuario para asignarlo" -
+                                    Texto guía sobre cómo usar la funcionalidad.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-users text-green-600"></i>
+                        3. Panel Derecho - Lista de Usuarios
+                    </h3>
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                        <p class="text-gray-700 mb-4">Este panel muestra todos los usuarios del sistema:</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-user text-green-600 mt-1"></i>
+                                <div>
+                                    <strong>Tarjetas de Usuario:</strong> Cada usuario aparece en una tarjeta
+                                    individual con su nombre.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-tag text-green-600 mt-1"></i>
+                                <div>
+                                    <strong>Badges de Rol:</strong> Si un usuario tiene un rol asignado, aparece como
+                                    una etiqueta de color junto a su nombre.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-scroll text-green-600 mt-1"></i>
+                                <div>
+                                    <strong>Scroll Vertical:</strong> Si hay muchos usuarios, el panel permite
+                                    desplazamiento vertical para ver todos.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-info-circle text-green-600 mt-1"></i>
+                                <div>
+                                    <strong>Instrucción:</strong> "Arrastra un rol fuera del usuario para eliminarlo" -
+                                    Texto guía sobre cómo remover roles.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cómo Asignar Roles -->
+        <section id="asignar" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-plus-circle text-4xl text-green-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Cómo Asignar Roles a Usuarios</h2>
+                </div>
+
+                <p class="text-gray-700 mb-6">Asignar un rol a un usuario es un proceso simple e intuitivo mediante
+                    arrastrar y soltar:</p>
+
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="step-number bg-green-600 text-white">1</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Seleccionar el Rol</h4>
+                            <p class="text-gray-700 mb-2">En el panel izquierdo, haz clic y mantén presionado sobre el
+                                rol que deseas asignar.</p>
+                            <div class="tip-box">
+                                <i class="fas fa-lightbulb text-blue-600 mr-2"></i>
+                                <strong>Tip:</strong> El cursor cambiará a un icono de "mano agarrando" cuando estés
+                                arrastrando.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-green-600 text-white">2</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Arrastrar sobre el Usuario</h4>
+                            <p class="text-gray-700 mb-2">Sin soltar el clic, arrastra el rol hacia la tarjeta del
+                                usuario al que deseas asignarlo.</p>
+                            <div class="tip-box">
+                                <i class="fas fa-lightbulb text-blue-600 mr-2"></i>
+                                <strong>Efecto Visual:</strong> La tarjeta del usuario se resaltará con un fondo azul
+                                claro y aumentará ligeramente de tamaño cuando el rol esté sobre ella.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-green-600 text-white">3</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Soltar el Rol</h4>
+                            <p class="text-gray-700 mb-2">Suelta el clic cuando estés sobre el usuario deseado.</p>
+                            <div class="success-box">
+                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                <strong>Confirmación:</strong> Aparecerá una notificación verde en la esquina superior
+                                derecha confirmando que el rol fue asignado exitosamente.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-green-600 text-white">4</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Verificar la Asignación</h4>
+                            <p class="text-gray-700 mb-2">El rol asignado aparecerá inmediatamente como una etiqueta de
+                                color junto al nombre del usuario.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-3">
+                                <p class="text-sm text-gray-600 mb-2"><strong>Ejemplo visual:</strong></p>
+                                <div class="flex items-center gap-3 bg-white p-3 rounded shadow-sm">
+                                    <i class="fas fa-user text-gray-600"></i>
+                                    <span class="font-semibold">Juan Pérez</span>
+                                    <span
+                                        class="px-4 py-1 rounded-full text-white text-sm bg-blue-500 flex items-center gap-1">
+                                        <i class="fas fa-grip-vertical text-xs"></i>
+                                        Rol 1
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box mt-6">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-exclamation-triangle text-orange-600 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-1">Importante</h4>
+                            <ul class="text-gray-700 space-y-1">
+                                <li>• Un usuario solo puede tener <strong>un rol asignado a la vez</strong>.</li>
+                                <li>• Si asignas un nuevo rol a un usuario que ya tiene uno, el rol anterior será
+                                    <strong>reemplazado automáticamente</strong>.
+                                </li>
+                                <li>• Los cambios se guardan <strong>inmediatamente en la base de datos</strong>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cómo Eliminar Roles -->
+        <section id="eliminar" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-trash-alt text-4xl text-red-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Cómo Eliminar Roles de Usuarios</h2>
+                </div>
+
+                <p class="text-gray-700 mb-6">Eliminar un rol asignado es igual de sencillo que asignarlo:</p>
+
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="step-number bg-red-600 text-white">1</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Seleccionar el Badge del Rol</h4>
+                            <p class="text-gray-700 mb-2">Haz clic y mantén presionado sobre la etiqueta de rol que
+                                aparece junto al nombre del usuario.</p>
+                            <div class="tip-box">
+                                <i class="fas fa-lightbulb text-blue-600 mr-2"></i>
+                                <strong>Identificación:</strong> El badge del rol muestra el icono de líneas verticales
+                                <i class="fas fa-grip-vertical text-xs"></i> indicando que es arrastrable.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-red-600 text-white">2</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Arrastrar Fuera del Usuario</h4>
+                            <p class="text-gray-700 mb-2">Arrastra el badge del rol hacia cualquier área fuera de la
+                                lista de usuarios (puede ser hacia el panel de roles, hacia arriba, o hacia los
+                                costados).</p>
+                            <div class="tip-box">
+                                <i class="fas fa-lightbulb text-blue-600 mr-2"></i>
+                                <strong>Área Válida:</strong> Cualquier zona que no sea otra tarjeta de usuario es
+                                válida para eliminar el rol.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-red-600 text-white">3</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Soltar el Badge</h4>
+                            <p class="text-gray-700 mb-2">Suelta el clic cuando estés fuera del área de usuarios.</p>
+                            <div class="success-box">
+                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                <strong>Confirmación:</strong> Aparecerá una notificación confirmando que el rol fue
+                                eliminado exitosamente.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="step-number bg-red-600 text-white">4</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 mb-2">Verificar la Eliminación</h4>
+                            <p class="text-gray-700">El badge del rol desaparecerá inmediatamente de la tarjeta del
+                                usuario, dejándolo sin rol asignado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box mt-6">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-info-circle text-orange-600 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-1">Nota Importante</h4>
+                            <p class="text-gray-700">La eliminación del rol es <strong>inmediata y sin
+                                    confirmación</strong>. El cambio se guarda automáticamente en la base de datos. Si
+                                eliminas un rol por error, simplemente vuelve a asignarlo siguiendo los pasos de
+                                asignación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consejos y Mejores Prácticas -->
+        <section id="consejos" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-lightbulb text-4xl text-yellow-500"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Consejos y Mejores Prácticas</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-blue-600 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">Planifica Antes de Asignar</h4>
+                                <p class="text-gray-700">Define claramente qué permisos corresponden a cada rol antes
+                                    de comenzar a asignarlos a los usuarios.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-eye text-green-600 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">Verifica las Asignaciones</h4>
+                                <p class="text-gray-700">Después de asignar roles, verifica que los usuarios tengan los
+                                    permisos correctos probando el acceso a diferentes módulos.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 p-6 rounded-lg border border-purple-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-users-cog text-purple-600 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">Principio de Mínimo Privilegio</h4>
+                                <p class="text-gray-700">Asigna a cada usuario solo el rol necesario para realizar sus
+                                    funciones, evitando otorgar permisos excesivos.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-50 p-6 rounded-lg border border-orange-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-history text-orange-600 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">Revisa Periódicamente</h4>
+                                <p class="text-gray-700">Realiza auditorías periódicas de los roles asignados para
+                                    asegurar que sigan siendo apropiados conforme cambian las responsabilidades.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-shield-alt text-red-600 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">Protege el Rol de Administrador</h4>
+                                <p class="text-gray-700">Limita el número de usuarios con Rol 0 (Administrador) solo a
+                                    personal de confianza y necesario.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-book text-yellow-600 text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">Documenta los Roles</h4>
+                                <p class="text-gray-700">Mantén documentación actualizada sobre qué permisos y accesos
+                                    otorga cada rol en el sistema.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preguntas Frecuentes -->
+        <section id="faq" class="section mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fas fa-question-circle text-4xl text-indigo-600"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Preguntas Frecuentes (FAQ)</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Qué sucede si arrastro un rol sobre un usuario que ya tiene otro rol?
+                        </h4>
+                        <p class="text-gray-700">El rol anterior será reemplazado automáticamente por el nuevo rol. Un
+                            usuario solo puede tener un rol asignado a la vez.</p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Los cambios se guardan automáticamente?
+                        </h4>
+                        <p class="text-gray-700">Sí, todos los cambios (asignaciones y eliminaciones de roles) se
+                            guardan inmediatamente en la base de datos sin necesidad de hacer clic en un botón
+                            "Guardar".</p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Puedo deshacer una asignación de rol?
+                        </h4>
+                        <p class="text-gray-700">No hay un botón de "deshacer", pero puedes eliminar el rol
+                            inmediatamente arrastrándolo fuera del usuario, o asignar un rol diferente si fue un error.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Qué significa cada rol (Rol 1, Rol 2, etc.)?
+                        </h4>
+                        <p class="text-gray-700">Los nombres de los roles son genéricos en la interfaz. Consulta la
+                            documentación de tu sistema o con el administrador principal para conocer los permisos
+                            específicos de cada rol.</p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Por qué no puedo acceder al módulo de asignación de roles?
+                        </h4>
+                        <p class="text-gray-700">Solo los usuarios con Rol 0 (Administrador) tienen acceso a este
+                            módulo. Si necesitas acceso, contacta a un administrador del sistema.</p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Puedo asignar múltiples roles a un mismo usuario?
+                        </h4>
+                        <p class="text-gray-700">No, el sistema está diseñado para que cada usuario tenga únicamente un
+                            rol asignado a la vez. Esto simplifica la gestión de permisos y evita conflictos.</p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Qué hago si aparece un error al asignar o eliminar un rol?
+                        </h4>
+                        <p class="text-gray-700">Si aparece una notificación de error (en rojo), verifica tu conexión a
+                            internet y vuelve a intentarlo. Si el problema persiste, contacta al soporte técnico con el
+                            mensaje de error específico.</p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Los usuarios son notificados cuando se les asigna o cambia un rol?
+                        </h4>
+                        <p class="text-gray-700">El sistema no envía notificaciones automáticas. Es recomendable
+                            informar manualmente a los usuarios sobre cambios en sus roles y los nuevos permisos que
+                            esto implica.</p>
+                    </div>
+
+                    <div class="border-l-4 border-indigo-600 pl-6 py-3">
+                        <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            ¿Funciona en dispositivos móviles o tablets?
+                        </h4>
+                        <p class="text-gray-700">La interfaz está optimizada principalmente para uso en computadoras de
+                            escritorio. En dispositivos táctiles, la funcionalidad de arrastrar y soltar puede variar
+                            según el navegador.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Soporte Técnico -->
+        <section class="section mb-12">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg shadow-lg p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-headset text-4xl"></i>
+                    <h2 class="text-3xl font-bold">Soporte Técnico</h2>
+                </div>
+                <p class="text-lg mb-4">Si tienes problemas técnicos o preguntas adicionales sobre el módulo de
+                    Asignación de Roles, no dudes en contactar al equipo de soporte.</p>
+                <div id="support-info" class="flex flex-wrap gap-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-envelope"></i>
+                        <span id="support-email">Cargando...</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-phone"></i>
+                        <span id="support-phone">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">© 2025 Sistema de Gestión de Tareas - Manual de Usuario v1.0</p>
+            <p class="text-xs text-gray-400 mt-2">Última actualización: Diciembre 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Load support contact information from database
+        async function loadSupportInfo() {
+            try {
+                const token = sessionStorage.getItem('authToken');
+                if (!token) {
+                    // If no token, show default values
+                    document.getElementById('support-email').textContent = 'soporte@tuempresa.com';
+                    document.getElementById('support-phone').textContent = '+54 11 1234-5678';
+                    return;
+                }
+
+                // Fetch support info from API
+                const response = await fetch('/api/support-info', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('support-email').textContent = data.email || 'soporte@tuempresa.com';
+                    document.getElementById('support-phone').textContent = data.phone || '+54 11 1234-5678';
+                } else {
+                    // Fallback to defaults
+                    document.getElementById('support-email').textContent = 'soporte@tuempresa.com';
+                    document.getElementById('support-phone').textContent = '+54 11 1234-5678';
+                }
+            } catch (error) {
+                console.error('Error loading support info:', error);
+                // Fallback to defaults
+                document.getElementById('support-email').textContent = 'soporte@tuempresa.com';
+                document.getElementById('support-phone').textContent = '+54 11 1234-5678';
+            }
+        }
+
+        // Load support info when page loads
+        document.addEventListener('DOMContentLoaded', loadSupportInfo);
+
+    </script>
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('nav a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('font-bold', 'underline');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('font-bold', 'underline');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

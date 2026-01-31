@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Esquema Funcional SaaS para Estudios Profesionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f7f9; color: #333; }
+        .container { max-width: 1000px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: #0056b3; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 25px; }
+        h1 { font-size: 28px; }
+        h2 { font-size: 24px; color: #333; }
+        h3 { font-size: 20px; color: #0056b3; }
+        .module { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        .diagram-caption { text-align: center; font-style: italic; margin-top: 10px; color: #555; }
+        .key-feature { background-color: #e6f7ff; padding: 10px; border-left: 5px solid #007bff; margin: 10px 0; }
+        ul { list-style-type: disc; margin-left: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>💡 Esquema Funcional de la Plataforma SaaS para Estudios Profesionales</h1>
+    <p>Esta plataforma está diseñada para estudios (Contables, Abogados, Consultores) con equipos pequeños (hasta 20 empleados), enfocándose en la gestión de tareas rutinarias con vencimiento y proyectos complejos, con un fuerte componente de supervisión jerárquica y control de tiempo/recursos.</p>
+    
+    <hr>
+
+    <div class="module">
+        <h2>1. ⚙️ Módulo de Gestión de la Organización (Estructura Interna)</h2>
+        <p>Este módulo define quién hace qué y quién supervisa a quién, esencial para el control interno de las PYMES profesionales.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Funcionalidad</th>
+                    <th>Descripción</th>
+                    <th>Impacto Estratégico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>**Definición de Organigrama Jerárquico**</td>
+                    <td>Permite definir la estructura del estudio (Ej: Socio > Gerente > Analista). La asignación de tareas y la supervisión se basan en esta estructura.</td>
+                    <td>Asignación de tareas y flujos de aprobación **coherentes con la estructura real.**</td>
+                </tr>
+                <tr>
+                    <td>**Gestión de Roles y Permisos**</td>
+                    <td>Definición de roles (Ej: "Contador Senior"). Asignación de permisos detallados por rol (crear proyectos, aprobar tareas, ver reportes de costos).</td>
+                    <td>**Seguridad y control** granular sobre la información.</td>
+                </tr>
+                <tr>
+                    <td>**Perfiles de Usuario y Tarifas**</td>
+                    <td>Creación de usuarios, asignación a un nivel jerárquico y registro de la **tarifa por hora interna** (costo) para el cálculo de la rentabilidad en reportes.</td>
+                    <td>**Base para la gestión de recursos** y el análisis de costos.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p class="diagram-caption"></p>
+    </div>
+
+    <div class="module">
+        <h2>2. 📝 Módulo de Gestión de Proyectos y Tareas</h2>
+        <p>El núcleo de la aplicación, diseñado para manejar la rutina de vencimientos (crucial) y los proyectos a largo plazo.</p>
+
+        <h3>Características Clave:</h3>
+        <ul>
+            <li>**Proyectos:** Contenedores de tareas a largo plazo, asociados a un cliente o internos.</li>
+            <li>**Plantillas de Tareas Rutinarias:** Creación de flujos de tareas predefinidas (Ej: Proceso de Liquidación de Sueldos) que se **auto-generan** con la frecuencia necesaria (mensual/anual) y una fecha de vencimiento fija.</li>
+            <li class="key-feature">**Asignación Múltiple y Compartida:** Las tareas pueden asignarse a **varios usuarios** a la vez para colaboración.</li>
+            <li>**Flujos de Aprobación Jerárquica:** Se define que una tarea (o subtarea) requiere la **aprobación de un superior** (según el Organigrama) antes de considerarse finalizada.</li>
+        </ul>
+
+        <h3>Visualización del Flujo de Tareas con Aprobación Jerárquica:</h3>
+        <p>Este diagrama ilustra cómo el organigrama interactúa con la gestión de tareas, asegurando la calidad del trabajo antes de su finalización.</p>
+        <p class="diagram-caption"></p>
+        
+        <p><strong>Ejemplo:</strong> Analista $\rightarrow$ Completa Carga de Datos $\rightarrow$ Tarea pasa a "En Revisión" $\rightarrow$ Gerente (Supervisor) $\rightarrow$ Aprueba o Rechaza (vuelve a "En Curso").</p>
+
+        <h3>Vistas de Tareas:</h3>
+        <ul>
+            <li>**Vista Kanban:** Tablero visual por estado (Pendiente, En Curso, En Revisión, Bloqueada, Completada).</li>
+            <li>**Vista Calendario:** Foco en las **fechas de vencimiento** y la capacidad de arrastrar tareas.</li>
+        </ul>
+    </div>
+
+    <div class="module">
+        <h2>3. ⏱️ Módulo de Gestión del Tiempo y Seguimiento</h2>
+        <p>Fundamental para la supervisión y la recopilación de datos para la facturación y el análisis de costos.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Funcionalidad</th>
+                    <th>Descripción</th>
+                    <th>Uso Jerárquico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>**Registro de Tiempo (Time Tracking)**</td>
+                    <td>Los usuarios inician un cronómetro (o ingresan horas manualmente) asociado a una tarea o proyecto.</td>
+                    <td>Permite cuantificar el esfuerzo y el costo.</td>
+                </tr>
+                <tr>
+                    <td>**Supervisión de Avance**</td>
+                    <td>Los supervisores pueden ver: **Progreso (%)**, **Horas Registradas** vs. **Horas Estimadas** (si se definen) de su equipo.</td>
+                    <td>**Control proactivo** de desvíos y sobrecarga de trabajo.</td>
+                </tr>
+                <tr>
+                    <td>**Alertas y Notificaciones**</td>
+                    <td>Notificaciones a usuarios y supervisores sobre: tareas nuevas, tareas vencidas, tareas próximas a vencer (Ej: 24h antes).</td>
+                    <td>Minimiza los riesgos de incumplimiento de plazos (penalidades).</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="module">
+        <h2>4. 📊 Módulo de Gestión de Recursos y Reportes</h2>
+        <p>Optimiza la distribución de la carga de trabajo y mide la rentabilidad del estudio.</p>
+
+        <h3>Gestión de Recursos (Capacidad y Carga)</h3>
+        <p>Esta es una característica avanzada que los estudios apreciarán para evitar el agotamiento y asegurar que las tareas se asignen a quienes tienen disponibilidad.</p>
+        <ul>
+            <li>**Carga de Trabajo del Equipo:** Visualización gráfica de las horas de trabajo asignadas a cada empleado para las próximas semanas/meses.</li>
+            <li>**Capacidad Disponible:** Muestra qué empleados están sobrecargados y cuáles tienen disponibilidad para nuevas tareas.</li>
+        </ul>
+        
+        <p class="diagram-caption"></p>
+
+        <h3>Reportes Clave para PYMES:</h3>
+        <ul>
+            <li>**Reporte de Rentabilidad por Cliente/Proyecto:** (Horas trabajadas * Tarifa Interna) vs. Ingresos Facturados.</li>
+            <li>**Reporte de Desempeño del Empleado:** Horas registradas, tareas completadas a tiempo vs. tarde, eficiencia.</li>
+            <li>**Reporte de Tareas Vencidas:** Detalle de todas las tareas que no se completaron a tiempo.</li>
+            <li>**Datos Exportables:** Capacidad de exportar reportes de tiempo para integración con sistemas de facturación.</li>
+        </ul>
+    </div>
+    
+    <hr>
+    
+    <h2>🚀 Resumen de Facilidades Adicionales (Ventaja Competitiva)</h2>
+    <ul>
+        <li>**Enfoque en Rutina y Vencimiento:** A diferencia de un Project Manager genérico, este sistema prioriza las tareas recurrentes con vencimiento fijo (crucial para lo contable/legal).</li>
+        <li>**Jerarquía Integrada:** La funcionalidad de aprobación y supervisión está ligada directamente al Organigrama del estudio, ofreciendo un control de calidad automático.</li>
+        <li>**Doble Medición de Tiempo:** Seguimiento de tiempo para la **facturación** (cobro al cliente) y el **costo interno** (cálculo de la rentabilidad).</li>
+    </ul>
+
+    <p>¿Te gustaría que profundicemos en el detalle de la base de datos o en la tecnología (stack) que sería ideal para desarrollar esta aplicación?</p>
+
+</div>
+</body>
+</html>

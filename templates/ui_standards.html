@@ -1,0 +1,66 @@
+# Estándares de Interfaz de Usuario (UI)
+
+Para mantener la uniformidad y profesionalismo de la aplicación, se han definido los siguientes criterios obligatorios
+para el desarrollo de nuevos módulos:
+
+## 1. Confirmaciones de Usuario
+**NUNCA** usar la función nativa `confirm()`. En su lugar, utilizar siempre el modal de confirmación personalizado
+(`openConfirmModal`).
+
+### Integración en el HTML:
+Copiar esta estructura antes de cerrar el `body`:
+```html
+<!-- Modal de Confirmación Genérico -->
+<div id="confirmation-modal"
+    class="fixed inset-0 bg-black bg-opacity-50 z-[200] hidden items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-sm transform transition-all scale-95 opacity-0 overflow-hidden"
+        id="confirmation-modal-content">
+        <div class="p-6">
+            <h2 class="text-xl font-bold text-gray-800 flex items-center mb-4">
+                <img src='img/cerrar.png' class="mr-2 h-6 w-6">Confirmación
+            </h2>
+            <p id="confirmation-message" class="text-gray-600 mb-6 font-semibold">¿Mensaje aquí?</p>
+            <div class="flex justify-end gap-3">
+                <button id="btn-confirm-no"
+                    class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">No</button>
+                <button id="btn-confirm-yes"
+                    class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Sí,
+                    continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### Lógica JavaScript:
+Referenciar `openConfirmModal(mensaje, callback)` asegurándose de que el modal esté presente en el DOM.
+
+## 2. Botones de Ayuda
+Utilizar siempre los colores y estilos definidos en la plantilla de ayuda (`templates/manual_template.html`) y el
+snippet de integración (`templates/help_system_snippet.html`).
+
+* **Color**: Azul (`bg-blue-500 hover:bg-blue-600`).
+* **Icono**: `img/ayuda.png`.
+* **Comportamiento**: Abrir manual en modal movible y maximizable.
+
+## 3. Contador de Colaboradores (Organigramas)
+En visualizaciones de estructura, indicar entre paréntesis negros el conteo de asignaciones si es mayor a cero. Ejemplo:
+`(3)`.
+
+## 4. Validaciones de Entrada
+Todos los campos de entrada de datos (inputs) deben estar validados para garantizar la integridad de la base de datos y
+mejorar la experiencia del usuario.
+
+### Requisitos de Integración:
+- Incluir la utilidad en el `
+<script src="js/utils.js" defer></script>`.
+- Usar el atributo `data-validations` con el tipo (`char` o `num`) y el largo coincidente con la base de datos.
+- **IMPORTANTE**: No usar el atributo `maxlength` si se desea mostrar el "badge" visual de error. El atributo
+`maxlength` bloquea el teclado antes de que nuestro script pueda detectar el exceso y mostrar el mensaje.
+- Usar el evento `oninput="validateInput(event)"`.
+
+### Ejemplo Correcto:
+```html
+<input type="text" id="input-nombre" data-validations='{"tipo":"char", "largo":45}' oninput="validateInput(event)"
+    class="border rounded p-2">
+```

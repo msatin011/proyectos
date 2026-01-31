@@ -1,0 +1,25 @@
+{
+  "name": "sass-tareas",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js",
+    "build:css": "tailwindcss -i ./css/tailwind.input.css -o ./css/tailwind.output.css --minify",
+    "dev:css": "tailwindcss -i ./css/tailwind.input.css -o ./css/tailwind.output.css --watch"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^17.2.3",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "http-proxy": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^12.2.0",
+    "multer": "^2.0.2",
+    "socket.io": "^4.8.3",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

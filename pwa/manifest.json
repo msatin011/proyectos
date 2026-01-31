@@ -1,0 +1,21 @@
+{
+    "name": "Gestión de Proyectos PWA",
+    "short_name": "Proyectos",
+    "start_url": "/pwa/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "scope": "/pwa/",
+    "icons": [
+        {
+            "src": "/img/logoproyectos.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/logoproyectos.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

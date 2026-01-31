@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!-- Build Timestamp: ${new Date().toISOString()} -->
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache-busting headers para desarrollo -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Gestión de Proyectos</title>
+
+    <!-- Versión de build para cache-busting -->
+    <script>
+        // Generar versión única por sesión/reload para desarrollo
+        window.APP_VERSION = localStorage.getItem('APP_VERSION') || Date.now().toString();
+        // Actualizar versión cada 5 minutos para desarrollo activo
+        if (Date.now() - parseInt(localStorage.getItem('APP_VERSION_TIME') || '0') > 30000) {
+            window.APP_VERSION = Date.now().toString();
+            localStorage.setItem('APP_VERSION', window.APP_VERSION);
+            localStorage.setItem('APP_VERSION_TIME', Date.now().toString());
+        }
+
+    </script>
+
+    <!-- Fonts (CDN - no necesitan cache-busting) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+    </script>
+
+    <!-- CSS Consolidado con cache-busting -->
+    <link rel="icon" href="img/logoproyectos.png" type="image/png">
+
+    <script>
+        // Cargar Tailwind compilado localmente con cache-busting
+        const tailwindLink = document.createElement('link');
+        tailwindLink.rel = 'stylesheet';
+        tailwindLink.href = 'css/tailwind.output.css?v=' + window.APP_VERSION;
+        document.head.appendChild(tailwindLink);
+    </script>
+
+    <!-- Socket.io (servido por server, siempre fresco) -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body class="bg-theme-bg text-theme-text font-sans">
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 flex flex-col gap-2 z-[300]"></div>
+
+    <div class="flex h-screen bg-theme-bg text-theme-text font-sans">
+        <!-- Menú Lateral (Sidebar) -->
+        <aside id="sidebar"
+            class="bg-theme-secondary text-gray-200 w-96 flex-shrink-0 flex flex-col transition-transform duration-300 ease-in-out z-40 absolute -translate-x-full"
+            style="height:100% !important;">
+            <!-- Cabecera del Menú -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-700"
+                style="background:rgb(211, 219, 231);border:solid 0.5pt #555;border-radius:30%;">
+                <h2 class="text-xl font-bold text-white" style="color:#222"><img src='img/icon-512.png'
+                        width="55%">Gesti&oacuten de Proyectos</h2>
+                <button id="menu-close-btn" class="text-gray-400 hover:text-white md:hidden"
+                    aria-label="Cerrar menú en móvil">
+                    <!-- Icono de cerrar (X) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <!-- Navegación -->
+            <nav class="flex-1 overflow-y-auto py-4">
+                <!-- El menú se generará dinámicamente aquí -->
+                <ul id="menu-container" class="flex flex-col h-full px-2"></ul>
+            </nav>
+            <!-- Pie del Menú con Botón para Colapsar -->
+            <div class="p-4 border-t border-gray-700">
+                <button id="sidebar-collapse-btn"
+                    class="w-full flex items-center justify-center gap-2 text-gray-300 hover:bg-gray-700 hover:text-white p-2 rounded-md transition-colors">
+                    <svg id="sidebar-collapse-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="transform transition-transform duration-300">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span id="sidebar-collapse-text">Replegar</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Contenedor Principal (Header + Contenido) -->
+        <div id="main-container" class="flex-1 flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
+            <!-- Cabecera Principal -->
+            <header class="bg-white shadow-md flex items-center justify-between p-4 z-30">
+                <!-- Botón para abrir menú en móvil -->
+                <button id="menu-open-btn" class="text-gray-600 hover:text-theme-primary" aria-label="Abrir menú">
+                    <!-- Icono de menú hamburguesa -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <!-- Título -->
+                <h1 id="header-title" class="text-xl font-semibold text-gray-800 hidden md:block">Panel de Control</h1>
+                <!-- Acciones de Usuario -->
+                <div class="flex items-center gap-4">
+                    <button id="notificationBtn" class="relative text-gray-600 hover:text-theme-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span id="notification-badge"
+                            class="absolute top-0 right-0 -mt-1 -mr-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white hidden">0</span>
+                    </button>
+                    <div id="userProfile" class="flex items-center gap-3 cursor-pointer">
+                        <div id="user-avatar"
+                            class="w-10 h-10 rounded-full bg-theme-primary text-white flex items-center justify-center font-bold">
+                        </div>
+                        <span id="user-name" class="hidden md:block font-semibold"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- ÁREA DE CONTENIDO PRINCIPAL - SPA CONTAINER (ya no es iframe) -->
+            <main id="app-container" class="flex-1 overflow-auto p-4 md:p-6">
+                <!-- Aquí se inyectará el contenido de cada pantalla -->
+                <div class="flex items-center justify-center h-full">
+                    <div class="text-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-theme-primary mx-auto mb-4">
+                        </div>
+                        <p class="text-gray-500">Cargando...</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Chat Container Flotante (global) -->
+    <div id="chat-floating-container"></div>
+
+    <!-- Scripts del sistema - Cargados dinámicamente con cache-busting -->
+    <script>
+        // Lista de scripts a cargar con cache-busting
+        const scripts = [
+            'js/utils.js',
+            'js/router.js',
+            'js/screens/dashboard.js',
+            'js/screens/feriado.js',
+            'js/screens/mismensajes.js',
+            'js/screens/rol.js',
+            'js/screens/usuario.js',
+            'js/screens/enviomensajes.js',
+            'js/screens/envinotif.js',
+            'js/screens/organigrama.js',
+            'js/screens/abmcron.js',
+            'js/screens/admin_server.js',
+            'js/screens/chat.js',
+            'js/screens/cliente.js',
+            'js/screens/asignarolmenu.js',
+            'js/layout.js'
+        ];
+
+        // Cargar scripts secuencialmente para mantener orden de dependencias
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src + '?v=' + window.APP_VERSION;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.body.appendChild(script);
+            });
+        }
+
+        async function loadAllScripts() {
+            for (const src of scripts) {
+                await loadScript(src);
+            }
+
+            // Inicializar layout (menú, sidebar, socket.io)
+            if (typeof initializeLayout === 'function') {
+                initializeLayout();
+            }
+
+            // Navegar a dashboard por defecto, o lo que indique el hash
+            setTimeout(() => {
+                if (!window.SpaRouter.initFromHash()) {
+                    window.navigate('dashboard');
+                }
+            }, 100);
+        }
+
+        // Iniciar carga cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadAllScripts);
+        } else {
+            loadAllScripts();
+        }
+    </script>
+</body>
+
+</html>

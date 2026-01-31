@@ -1,0 +1,150 @@
+<!-- 
+    HELP SYSTEM INTEGRATION SNIPPET
+    Copy the following sections into your module's HTML file (e.g., organigrama.html).
+-->
+
+<!-- 1. CSS STYLES (Add to <style> section) -->
+<style>
+    #help-modal {
+        position: fixed;
+        top: 5%;
+        right: 2%;
+        width: 90%;
+        height: 70%;
+        background-color: white;
+        border: 1px solid #d1d5db;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: none;
+        flex-direction: column;
+        resize: both;
+        overflow: auto;
+        min-width: 400px;
+        min-height: 300px;
+        border-radius: 8px;
+        animation: fadeInHelp 0.3s;
+    }
+
+    #help-modal-header {
+        background: linear-gradient(180deg, #aad2eb 0%, #8c9bc4 100%);
+        color: white;
+        padding: 12px 16px;
+        cursor: move;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+        user-select: none;
+    }
+
+    #help-modal-iframe {
+        flex-grow: 1;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    @keyframes fadeInHelp {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>
+
+
+<!-- 2. HTML STRUCTURE (Add before </body>) -->
+<div id="help-modal">
+    <div id="help-modal-header">
+        <div class="flex items-center gap-4 font-bold text-lg">
+            <span>Manual de Usuario - [NOMBRE DEL MODULO]</span>
+            <button onclick="document.getElementById('help-modal-iframe').contentWindow.print()"
+                class="bg-white text-blue-600 px-3 py-1 text-sm rounded hover:bg-blue-50 transition flex items-center gap-2 shadow-sm">
+                <i class="fas fa-print"></i>
+                <span>Imprimir</span>
+            </button>
+        </div>
+        <div class="flex items-center">
+            <span class="text-white text-sm mr-2">Abrir en una nueva solapa la ayuda ->&nbsp;</span>
+            <button id="maximize-help-modal" title="Maximizar / Abrir en nueva pestaña"
+                class="text-white hover:text-gray-200 hover:bg-blue-700 rounded p-1 transition-colors mr-2">
+                <i class="fas fa-external-link-alt"></i>
+            </button>&nbsp;&nbsp;&nbsp;
+            <button id="close-help-modal"
+                class="text-white hover:text-gray-200 hover:bg-blue-700 rounded p-1 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <iframe id="help-modal-iframe" src="" class="w-full flex-grow bg-white" frameborder="0"></iframe>
+</div>
+
+
+<!-- 3. JAVASCRIPT LOGIC (Add to <script> after DOMContentLoaded) -->
+<script>
+    // Configuration
+    const manualPath = 'ayudas/manual_[MODULO].html';
+    const helpModal = document.getElementById('help-modal');
+    const helpIframe = document.getElementById('help-modal-iframe');
+
+    // Function to open help
+    function openManual() {
+        if (!helpIframe.getAttribute('src') || helpIframe.getAttribute('src') !== manualPath) {
+            helpIframe.src = manualPath;
+        }
+        helpModal.style.display = 'flex';
+    }
+
+    // Attach to buttons
+    document.getElementById('btn-ayuda').onclick = openManual;
+    // document.getElementById('btn-ayuda-editor').onclick = openManual; // If applicable
+
+    // Close button
+    document.getElementById('close-help-modal').onclick = () => helpModal.style.display = 'none';
+
+    // Maximize button
+    document.getElementById('maximize-help-modal').onclick = () => {
+        helpModal.style.display = 'none';
+        window.open(manualPath, '_blank');
+    };
+
+    // Draggable logic
+    const helpHeader = document.getElementById('help-modal-header');
+    let isDraggingHelp = false;
+    let startXHelp, startYHelp, initialLeftHelp, initialTopHelp;
+
+    if (helpHeader) {
+        helpHeader.onmousedown = function (e) {
+            if (e.target.closest('button')) return;
+            isDraggingHelp = true;
+            startXHelp = e.clientX;
+            startYHelp = e.clientY;
+            const rect = helpModal.getBoundingClientRect();
+            initialLeftHelp = rect.left;
+            initialTopHelp = rect.top;
+            helpModal.style.right = 'auto';
+            helpModal.style.bottom = 'auto';
+            helpModal.style.left = initialLeftHelp + 'px';
+            helpModal.style.top = initialTopHelp + 'px';
+            document.body.style.userSelect = 'none';
+        };
+
+        document.onmousemove = function (e) {
+            if (!isDraggingHelp) return;
+            helpModal.style.left = (initialLeftHelp + (e.clientX - startXHelp)) + 'px';
+            helpModal.style.top = (initialTopHelp + (e.clientY - startYHelp)) + 'px';
+        };
+
+        document.onmouseup = function () {
+            isDraggingHelp = false;
+            document.body.style.userSelect = '';
+        };
+    }
+</script>

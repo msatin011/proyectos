@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Gestión de Proyectos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/logoproyectos.png" type="image/png">
+    <link href="css/tailwind.output.css" rel="stylesheet">
+    <!-- TailwindCSS ya compilado en styles.css - no necesita CDN -->
+
+    <script src="js/utils.js" defer></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js" defer></script>
+    <style>
+        .eye-icon {
+            color: rgb(142, 142, 202);
+            top: 14px !important;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body class="bg-theme-bg text-theme-text transition-colors duration-300">
+
+    <!-- Splash Screen -->
+    <div id="splash-screen"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-theme-bg transition-opacity duration-500">
+        <img src="img/logoproyectos.png" alt="Logo Proyectos" class="w-full animate-pulsate">
+    </div>
+
+    <!-- Contenedor Principal (Oculto inicialmente) -->
+    <main id="main-content"
+        class="flex flex-col items-center justify-center min-h-screen p-4 opacity-0 transition-opacity duration-500 relative z-10">
+
+
+
+        <div class="w-full max-w-md">
+            <!-- Formulario de Login (Visible por defecto) -->
+            <div id="login-form-container">
+                <div class="bg-white shadow-2xl rounded-lg p-8">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Iniciar Sesión</h2>
+                    <form id="login-form" autocomplete="off">
+                        <div class="mb-4">
+                            <label for="cuit-login" class="block text-gray-700 text-sm font-bold mb-2">CUIT</label>
+                            <input autocomplete='off' id="cuit-login" name="cuit" data-validations='{"tipo":"num"}'
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Ej: 20-12345678-9" required autocomplete="off">
+                        </div>
+                        <div class="mb-4">
+                            <label for="u-login" class="block text-gray-700 text-sm font-bold mb-2">Usuario</label>
+                            <input autocomplete='off' type="text" id="u-login" name="u"
+                                data-validations='{"tipo":"char", "largo":50}'
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Tu nombre de usuario" required>
+                        </div>
+                        <div class="mb-6 relative">
+                            <label for="password-login" class="block text-gray-700 text-sm font-bold mb-2">Clave</label>
+                            <input autocomplete='off' type="password" id="password-login" name="password"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                                required autocomplete="current-password">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+                                <button type="button" class="password-toggle" data-target="password-login"
+                                    aria-label="Toggle password visibility">
+                                    <svg class="eye-icon eye-open " width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-icon eye-closed hidden" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                        </path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <button type="button" id="btn-login-submit"
+                                class="flex items-center justify-center gap-2 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 text-white font-medium text-sm w-full"
+                                style="padding: 0.6rem 0.75rem; background: linear-gradient(180deg, #aad2eb 0%, #8c9bc4 100%); border: 0.5px solid #888;">
+                                <!-- Icono SVG: Log In -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                    <polyline points="10 17 15 12 10 7"></polyline>
+                                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                                </svg>
+                                <span class="text-base font-bold">Ingresar</span>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-4">
+
+                        <a href="#" id="show-change-password"
+                            class="inline-block align-baseline font-bold text-sm text-theme-primary hover:text-theme-accent">Cambiar
+                            Clave</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario Olvidé mi Clave (Oculto) -->
+
+
+            <!-- Formulario Cambiar Clave (Oculto) -->
+            <div id="change-password-container" class="hidden">
+                <div class="bg-white shadow-2xl rounded-lg p-8">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Cambiar Clave</h2>
+                    <form id="change-password-form" autocomplete="off">
+                        <div class="mb-4">
+                            <label for="cuit-change" class="block text-gray-700 text-sm font-bold mb-2">CUIT</label>
+                            <input type="text" id="cuit-change" data-validations='{"tipo":"char", "largo":13}'
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Ej: 20-12345678-9" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="u-change" class="block text-gray-700 text-sm font-bold mb-2">Usuario</label>
+                            <input type="text" id="u-change" data-validations='{"tipo":"char", "largo":50}'
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Tu nombre de usuario" required>
+                        </div>
+                        <div class="mb-4 relative">
+                            <label for="old-password" class="block text-gray-700 text-sm font-bold mb-2">Clave
+                                Anterior</label>
+                            <input type="password" id="old-password"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                                required>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+                                <button type="button" class="password-toggle" data-target="old-password"
+                                    aria-label="Toggle password visibility">
+                                    <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-icon eye-closed hidden" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                        </path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-4 relative">
+                            <label for="new-password" class="block text-gray-700 text-sm font-bold mb-2">Nueva
+                                Clave</label>
+                            <input type="password" id="new-password"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                                required>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+                                <button type="button" class="password-toggle" data-target="new-password"
+                                    aria-label="Toggle password visibility">
+                                    <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-icon eye-closed hidden" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                        </path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-6 relative">
+                            <label for="confirm-password" class="block text-gray-700 text-sm font-bold mb-2">Confirmar
+                                Nueva Clave</label>
+                            <input type="password" id="confirm-password"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pr-10"
+                                required>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+                                <button type="button" class="password-toggle" data-target="confirm-password"
+                                    aria-label="Toggle password visibility">
+                                    <svg class="eye-icon eye-open" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-icon eye-closed hidden" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                        </path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="button" class="text-sm text-gray-600 hover:text-gray-800"
+                                id="back-to-login-2">&larr; Volver al Login</button>
+                            <button type="button" id="btn-change-password-submit"
+                                class="flex items-center justify-center gap-2 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 text-white font-medium text-sm"
+                                style="padding: 0.5rem 0.75rem; background: linear-gradient(180deg, #aad2eb 0%, #8c9bc4 100%); border: 0.5px solid #888;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3m-3-3l2.5-2.5">
+                                    </path>
+                                </svg>
+                                <span>Cambiar Clave</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Contenedor para notificaciones Toast -->
+    <div id="toast-container" class="fixed top-1 right-5 z-[100] flex flex-col items-end gap-3"></div>
+
+    <!-- Contenedor para el Layout principal (inicialmente oculto) -->
+    <div id="layout-container" class="hidden w-full h-screen"></div>
+
+</body>
+
+</html>

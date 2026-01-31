@@ -1,0 +1,5 @@
+.gradiente {
+    background: linear-gradient(180deg, #ccc 0%, #eee 50%, #ccc 100%) !important;
+    color: #000 !important;
+    border: solid 0.5pt #999;
+}

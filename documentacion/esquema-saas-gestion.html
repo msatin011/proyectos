@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Gestión de Proyectos - Estudios Profesionales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .diagram-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .module-card h4 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .module-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .module-card ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .module-card ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .flow-box {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 180px;
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .flow-box.highlight {
+            background: #667eea;
+            color: white;
+        }
+
+        .flow-arrow {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .hierarchy-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hierarchy-level {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hierarchy-box {
+            background: white;
+            border: 3px solid #764ba2;
+            border-radius: 10px;
+            padding: 15px 25px;
+            text-align: center;
+            min-width: 150px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hierarchy-box.level-1 { background: #764ba2; color: white; }
+        .hierarchy-box.level-2 { background: #9575cd; color: white; }
+        .hierarchy-box.level-3 { background: #b39ddb; color: white; }
+
+        .vertical-line {
+            width: 3px;
+            height: 30px;
+            background: #764ba2;
+        }
+
+        .feature-list {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .feature-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list ul li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list ul li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .alert-box strong {
+            color: #856404;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .section h2 {
+                font-size: 1.5em;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Sistema SaaS de Gestión de Proyectos</h1>
+            <p>Para Estudios Contables, Legales y Profesionales</p>
+        </header>
+
+        <div class="content">
+            <!-- RESUMEN EJECUTIVO -->
+            <div class="section">
+                <h2>🎯 Resumen Ejecutivo</h2>
+                <p><strong>Objetivo:</strong> Sistema web SaaS para gestión de proyectos, tareas y recursos orientado a estudios profesionales (contables, legales, consultorías) con equipos de hasta 20 personas.</p>
+                
+                <div class="alert-box">
+                    <strong>🎪 Características Principales:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Gestión de proyectos a largo plazo con múltiples tareas</li>
+                        <li>Tareas rutinarias con vencimientos automáticos</li>
+                        <li>Organigrama jerárquico configurable</li>
+                        <li>Seguimiento de tiempos y recursos</li>
+                        <li>Colaboración entre usuarios</li>
+                        <li>Supervisión por niveles jerárquicos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ARQUITECTURA DEL SISTEMA -->
+            <div class="section">
+                <h2>🏗️ Arquitectura del Sistema</h2>
+                
+                <div class="diagram-container">
+                    <h3 style="text-align: center; margin-bottom: 30px;">Capas de la Aplicación</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-box highlight">Frontend PWA<br><small>React/Vue.js</small></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box highlight">API REST<br><small>PHP/Node.js</small></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box highlight">Base de Datos<br><small>MySQL/PostgreSQL</small></div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <div class="tech-item">PWA Installable</div>
+                    <div class="tech-item">Responsive Design</div>
+                    <div class="tech-item">Offline First</div>
+                    <div class="tech-item">Multi-tenant</div>
+                    <div class="tech-item">Cloud Ready</div>
+                    <div class="tech-item">API REST</div>
+                </div>
+            </div>
+
+            <!-- JERARQUÍA ORGANIZACIONAL -->
+            <div class="section">
+                <h2>👥 Estructura Jerárquica</h2>
+                
+                <div class="diagram-container">
+                    <h3 style="text-align: center; margin-bottom: 30px;">Niveles de Usuario</h3>
+                    <div class="hierarchy-diagram">
+                        <div class="hierarchy-level">
+                            <div class="hierarchy-box level-1">
+                                <strong>ADMINISTRADOR</strong><br>
+                                <small>Configuración global</small>
+                            </div>
+                        </div>
+                        <div class="vertical-line"></div>
+                        <div class="hierarchy-level">
+                            <div class="hierarchy-box level-2">
+                                <strong>SOCIO/DIRECTOR</strong><br>
+                                <small>Supervisión total</small>
+                            </div>
+                            <div class="hierarchy-box level-2">
+                                <strong>GERENTE</strong><br>
+                                <small>Área específica</small>
+                            </div>
+                        </div>
+                        <div class="vertical-line"></div>
+                        <div class="hierarchy-level">
+                            <div class="hierarchy-box level-3">
+                                <strong>COORDINADOR</strong><br>
+                                <small>Equipo de trabajo</small>
+                            </div>
+                            <div class="hierarchy-box level-3">
+                                <strong>ANALISTA SENIOR</strong><br>
+                                <small>Tareas complejas</small>
+                            </div>
+                        </div>
+                        <div class="vertical-line"></div>
+                        <div class="hierarchy-level">
+                            <div class="hierarchy-box level-3">
+                                <strong>ANALISTA</strong><br>
+                                <small>Ejecución de tareas</small>
+                            </div>
+                            <div class="hierarchy-box level-3">
+                                <strong>ASISTENTE</strong><br>
+                                <small>Soporte operativo</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-list">
+                    <strong>Permisos por Nivel:</strong>
+                    <ul>
+                        <li><strong>Administrador:</strong> Configuración del sistema, usuarios, planes de suscripción</li>
+                        <li><strong>Socio/Director:</strong> Visión completa, asignación de recursos, aprobaciones finales</li>
+                        <li><strong>Gerente:</strong> Gestión de su área, supervisión de equipos, reportes</li>
+                        <li><strong>Coordinador:</strong> Asignación de tareas, seguimiento de equipo</li>
+                        <li><strong>Analista/Asistente:</strong> Ejecución y reporte de tareas asignadas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MÓDULOS PRINCIPALES -->
+            <div class="section">
+                <h2>🧩 Módulos del Sistema</h2>
+                
+                <div class="module-grid">
+                    <div class="module-card">
+                        <h4>📋 Gestión de Clientes</h4>
+                        <ul>
+                            <li>Ficha completa del cliente</li>
+                            <li>Historial de proyectos</li>
+                            <li>Contactos múltiples</li>
+                            <li>Documentación asociada</li>
+                            <li>Estado de cuenta</li>
+                            <li>Notas y observaciones</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>📁 Gestión de Proyectos</h4>
+                        <ul>
+                            <li>Creación de proyectos complejos</li>
+                            <li>Estructura de tareas (WBS)</li>
+                            <li>Diagrama de Gantt</li>
+                            <li>Dependencias entre tareas</li>
+                            <li>Hitos y entregables</li>
+                            <li>Estados personalizables</li>
+                            <li>Templates de proyectos</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>✅ Gestión de Tareas</h4>
+                        <ul>
+                            <li>Tareas individuales y grupales</li>
+                            <li>Priorización (Alta/Media/Baja)</li>
+                            <li>Fechas de inicio y vencimiento</li>
+                            <li>Subtareas anidadas</li>
+                            <li>Checklist de verificación</li>
+                            <li>Comentarios y actualizaciones</li>
+                            <li>Adjuntos de archivos</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>📅 Tareas Rutinarias</h4>
+                        <ul>
+                            <li>Vencimientos recurrentes</li>
+                            <li>Plantillas de tareas</li>
+                            <li>Calendario de obligaciones</li>
+                            <li>Alertas automáticas</li>
+                            <li>Asignación masiva</li>
+                            <li>Patrones personalizables</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>⏱️ Control de Tiempos</h4>
+                        <ul>
+                            <li>Registro de horas trabajadas</li>
+                            <li>Timer integrado (start/stop)</li>
+                            <li>Histórico por tarea/proyecto</li>
+                            <li>Tiempo estimado vs real</li>
+                            <li>Reportes de productividad</li>
+                            <li>Facturación por horas</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>🔧 Gestión de Recursos</h4>
+                        <ul>
+                            <li>Disponibilidad de personal</li>
+                            <li>Capacidad de trabajo</li>
+                            <li>Asignación de recursos</li>
+                            <li>Conflictos de agenda</li>
+                            <li>Recursos materiales</li>
+                            <li>Matriz de habilidades</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>📊 Reportes y Análisis</h4>
+                        <ul>
+                            <li>Dashboard personalizable</li>
+                            <li>KPIs del negocio</li>
+                            <li>Cumplimiento de deadlines</li>
+                            <li>Productividad por usuario</li>
+                            <li>Rentabilidad por proyecto</li>
+                            <li>Exportación PDF/Excel</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>🔔 Notificaciones</h4>
+                        <ul>
+                            <li>Push notifications (PWA)</li>
+                            <li>Email automático</li>
+                            <li>Alertas de vencimiento</li>
+                            <li>Actualizaciones de tareas</li>
+                            <li>Recordatorios configurables</li>
+                            <li>Centro de notificaciones</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>📄 Gestión Documental</h4>
+                        <ul>
+                            <li>Repositorio de archivos</li>
+                            <li>Versionado de documentos</li>
+                            <li>Organización por carpetas</li>
+                            <li>Búsqueda avanzada</li>
+                            <li>Control de acceso</li>
+                            <li>Compartir con clientes</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>💬 Comunicación</h4>
+                        <ul>
+                            <li>Chat por proyecto/tarea</li>
+                            <li>Menciones (@usuario)</li>
+                            <li>Historial de conversaciones</li>
+                            <li>Compartir archivos</li>
+                            <li>Emojis y reacciones</li>
+                            <li>Estado de lectura</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>📈 Facturación (Opcional)</h4>
+                        <ul>
+                            <li>Timesheet para facturar</li>
+                            <li>Tarifas por hora/proyecto</li>
+                            <li>Presupuestos</li>
+                            <li>Gastos asociados</li>
+                            <li>Integración contable</li>
+                            <li>Estado de pagos</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>⚙️ Configuración</h4>
+                        <ul>
+                            <li>Perfiles de usuario</li>
+                            <li>Roles y permisos</li>
+                            <li>Campos personalizados</li>
+                            <li>Estados del workflow</li>
+                            <li>Plantillas del sistema</li>
+                            <li>Integraciones</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLUJO DE TRABAJO -->
+            <div class="section">
+                <h2>🔄 Flujos de Trabajo Principales</h2>
+                
+                <h3>Flujo 1: Proyecto Nuevo</h3>
+                <div class="diagram-container">
+                    <div class="flow-diagram">
+                        <div class="flow-box">Cliente nuevo</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Crear proyecto</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Definir tareas</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Asignar recursos</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Iniciar ejecución</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Supervisar avance</div>
+                    </div>
+                </div>
+
+                <h3>Flujo 2: Tarea Rutinaria</h3>
+                <div class="diagram-container">
+                    <div class="flow-diagram">
+                        <div class="flow-box">Template activo</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Generación automática</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Notificación</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Ejecución</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Cierre y registro</div>
+                    </div>
+                </div>
+
+                <h3>Flujo 3: Supervisión Jerárquica</h3>
+                <div class="diagram-container">
+                    <div class="flow-diagram">
+                        <div class="flow-box">Asignación tarea</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Usuario ejecuta</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Actualiza progreso</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Supervisor revisa</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Aprueba/Rechaza</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARACTERÍSTICAS TÉCNICAS -->
+            <div class="section">
+                <h2>💻 Stack Tecnológico Recomendado</h2>
+                
+                <h3>Frontend</h3>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>Framework:</strong> React.js o Vue.js</li>
+                        <li><strong>UI Components:</strong> Material-UI, Ant Design o TailwindCSS</li>
+                        <li><strong>Estado:</strong> Redux/Vuex o Context API</li>
+                        <li><strong>PWA:</strong> Service Workers, manifest.json, Workbox</li>
+                        <li><strong>Gráficos:</strong> Chart.js o Recharts</li>
+                        <li><strong>Gantt:</strong> dhtmlxGantt, Frappe Gantt o desarrollo custom</li>
+                        <li><strong>Drag & Drop:</strong> react-beautiful-dnd</li>
+                    </ul>
+                </div>
+
+                <h3>Backend</h3>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>Lenguaje:</strong> PHP 8+ (tu experiencia) o Node.js</li>
+                        <li><strong>Framework:</strong> Laravel/Symfony (PHP) o Express (Node)</li>
+                        <li><strong>API:</strong> REST o GraphQL</li>
+                        <li><strong>Autenticación:</strong> JWT + Refresh Tokens</li>
+                        <li><strong>Base de datos:</strong> MySQL 8+ o PostgreSQL</li>
+                        <li><strong>Cache:</strong> Redis</li>
+                        <li><strong>Jobs/Colas:</strong> Laravel Queue o Bull (Node)</li>
+                    </ul>
+                </div>
+
+                <h3>Infraestructura</h3>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>Hosting:</strong> AWS, Google Cloud, DigitalOcean</li>
+                        <li><strong>CDN:</strong> CloudFlare</li>
+                        <li><strong>Storage:</strong> S3 o similar para archivos</li>
+                        <li><strong>Email:</strong> SendGrid, Amazon SES</li>
+                        <li><strong>Push:</strong> Firebase Cloud Messaging</li>
+                        <li><strong>Backups:</strong> Automatizados diarios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MODELO DE DATOS -->
+            <div class="section">
+                <h2>🗄️ Estructura de Base de Datos Principal</h2>
+                
+                <div class="feature-list">
+                    <strong>Tablas Principales:</strong>
+                    <ul>
+                        <li><strong>tenants:</strong> Información de cada estudio (multi-tenant)</li>
+                        <li><strong>users:</strong> Usuarios del sistema</li>
+                        <li><strong>roles:</strong> Roles jerárquicos</li>
+                        <li><strong>permissions:</strong> Permisos granulares</li>
+                        <li><strong>clients:</strong> Clientes del estudio</li>
+                        <li><strong>projects:</strong> Proyectos principales</li>
+                        <li><strong>tasks:</strong> Tareas individuales</li>
+                        <li><strong>task_templates:</strong> Plantillas de tareas rutinarias</li>
+                        <li><strong>task_assignments:</strong> Asignaciones usuario-tarea</li>
+                        <li><strong>time_entries:</strong> Registro de tiempos</li>
+                        <li><strong>resources:</strong> Recursos disponibles</li>
+                        <li><strong>resource_allocations:</strong> Asignación de recursos</li>
+                        <li><strong>documents:</strong> Archivos y documentos</li>
+                        <li><strong>comments:</strong> Comentarios en tareas/proyectos</li>
+                        <li><strong>notifications:</strong> Sistema de notificaciones</li>
+                        <li><strong>activity_log:</strong> Auditoría completa</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FUNCIONALIDADES DESTACADAS -->
+            <div class="section">
+                <h2>⭐ Funcionalidades Destacadas para Diferenciación</h2>
+                
+                <div class="module-grid">
+                    <div class="module-card">
+                        <h4>🤖 Automatización Inteligente</h4>
+                        <ul>
+                            <li>Generación automática de tareas recurrentes</li>
+                            <li>Reasignación inteligente por carga</li>
+                            <li>Alertas predictivas de retrasos</li>
+                            <li>Sugerencias de optimización</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>📱 Mobile First</h4>
+                        <ul>
+                            <li>PWA totalmente funcional offline</li>
+                            <li>Sincronización automática</li>
+                            <li>Interfaz optimizada para móvil</li>
+                            <li>Escaneo de documentos</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>🔗 Integraciones</h4>
+                        <ul>
+                            <li>Google Calendar</li>
+                            <li>Microsoft 365</li>
+                            <li>WhatsApp Business API</li>
+                            <li>Sistemas contables</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>🎨 Personalización</h4>
+                        <ul>
+                            <li>Workflows personalizables</li>
+                            <li>Campos custom por tipo</li>
+                            <li>Branding del estudio</li>
+                            <li>Reportes a medida</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>🔐 Seguridad Avanzada</h4>
+                        <ul>
+                            <li>Autenticación de dos factores</li>
+                            <li>Encriptación end-to-end</li>
+                            <li>Permisos granulares</li>
+                            <li>Auditoría completa</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>📊 Analytics Potenciado</h4>
+                        <ul>
+                            <li>Dashboard ejecutivo</li>
+                            <li>Predicción de recursos</li>
+                            <li>Rentabilidad por cliente</li>
+                            <li>Benchmarking interno</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASES DE DESARROLLO -->
+            <div class="section">
+                <h2>🚀 Fases de Desarrollo Recomendadas</h2>
+                
+                <h3>Fase 1: MVP (2-3 meses)</h3>
+                <div class="feature-list">
+                    <ul>
+                        <li>Autenticación y gestión de usuarios</li>
+                        <li>CRUD de clientes básico</li>
+                        <li>Proyectos y tareas simples</li>
+                        <li>Asignación básica de tareas</li>
+                        <li>Dashboard simple</li>
+                        <li>Notificaciones por email</li>
+                    </ul>
+                </div>
+
+                <h3>Fase 2: Funcionalidad Completa (2-3 meses)</h3>
+                <div class="feature-list">
+                    <ul>
+                        <li>Jerarquía organizacional completa</li>
+                        <li>Tareas rutinarias con plantillas</li>
+                        <li>Control de tiempos integrado</li>
+                        <li>Gestión de recursos</li>
+                        <li>Sistema de comentarios</li>
+                        <li>Documentos y adjuntos</li>
+                        <li>Diagrama de Gantt</li>
+                    </ul>
+                </div>
+
+                <h3>Fase 3: Optimización y Avanzado (2 meses)</h3>
+                <div class="feature-list">
+                    <ul>
+                        <li>PWA completamente funcional</li>
+                        <li>Modo offline</li>
+                        <li>Push notifications</li>
+                        <li>Reportes avanzados</li>
+                        <li>Integraciones externas</li>
+                        <li>Personalización avanzada</li>
+                        <li>Optimización de performance</li>
+                    </ul>
+                </div>
+
+                <h3>Fase 4: Escalabilidad (Continuo)</h3>
+                <div class="feature-list">
+                    <ul>
+                        <li>Módulo de facturación</li>
+                        <li>API pública</li>
+                        <li>Webhooks</li>
+                        <li>Inteligencia artificial</li>
+                        <li>App móvil nativa (opcional)</li>
+                        <li>Marketplace de integraciones</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MODELO DE NEGOCIO -->
+            <div class="section">
+                <h2>💰 Modelo de Negocio SaaS</h2>
+                
+                <div class="module-grid">
+                    <div class="module-card">
+                        <h4>Plan Starter</h4>
+                        <ul>
+                            <li>Hasta 5 usuarios</li>
+                            <li>Proyectos ilimitados</li>
+                            <li>5GB almacenamiento</li>
+                            <li>Funciones básicas</li>
+                            <li><strong>USD 29/mes</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>Plan Professional</h4>
+                        <ul>
+                            <li>Hasta 15 usuarios</li>
+                            <li>Todo ilimitado</li>
+                            <li>50GB almacenamiento</li>
+                            <li>Todas las funciones</li>
+                            <li><strong>USD 79/mes</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <h4>Plan Enterprise</h4>
+                        <ul>
+                            <li>Usuarios ilimitados</li>
+                            <li>Todo ilimitado</li>
+                            <li>500GB almacenamiento</li>
+                            <li>Soporte prioritario</li>
+                            <li><strong>USD 199/mes</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRÓXIMOS PASOS -->
+            <div class="section">
+                <h2>📝 Próximos Pasos Recomendados</h2>
+                
+                <div class="alert-box">
+                    <strong>✅ Checklist Pre-Desarrollo:</strong>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li>Validar el mercado (encuestas a estudios potenciales)</li>
+                        <li>Definir MVP exacto (features mínimas imprescindibles)</li>
+                        <li>Crear wireframes/mockups de las pantallas principales</li>
+                        <li>Diseñar modelo de datos detallado</li>
+                        <li>Elegir stack tecnológico definitivo</li>
+                        <li>Configurar entorno de desarrollo</li>
+                        <li>Establecer metodología (Scrum/Kanban)</li>
+                        <li>Definir arquitectura multi-tenant</li>
+                        <li>Planificar sistema de pagos/suscripciones</li>
+                        <li>Iniciar desarrollo del MVP</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Animaciones suaves al scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.module-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

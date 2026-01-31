@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual - Administración de Cron</title>
+    <link href="../css/tailwind.output.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tailwind.output.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-theme-bg text-theme-text font-sans p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Manual de Usuario - Administración de Cron</h1>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">¿Qué es un Cron?</h2>
+            <p class="text-gray-600 mb-4">
+                Un cron es una configuración de tiempo que define cuándo ejecutar ciertas tareas automáticas
+                en el sistema. Permite programar procesos según días específicos, horas de inicio y fin.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Tipos de Cron Disponibles</h2>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <li><strong>Dia fijo:</strong> Se ejecuta en un día específico del mes</li>
+                <li><strong>Todos los dias:</strong> Se ejecuta diariamente</li>
+                <li><strong>Dias del mes:</strong> Se ejecuta en días específicos del mes</li>
+                <li><strong>Dias de la semana:</strong> Se ejecuta en días específicos de la semana</li>
+                <li><strong>Hora inicio:</strong> Define la hora de inicio de ejecución</li>
+                <li><strong>Hora fin:</strong> Define la hora de finalización de ejecución</li>
+            </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Formato de Horas</h2>
+            <p class="text-gray-600 mb-4">
+                Las horas deben ingresarse en formato HHMM (24 horas), sin separadores:
+            </p>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <li>7:15 AM = 0715</li>
+                <li>2:30 PM = 1430</li>
+                <li>10:44 PM = 2244</li>
+                <li>12:00 AM = 0000</li>
+                <li>11:59 PM = 2359</li>
+            </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Funciones Principales</h2>
+
+            <h3 class="text-xl font-medium text-gray-700 mb-3">Agregar Cron</h3>
+            <p class="text-gray-600 mb-4">
+                Haga clic en el botón "Agregar Cron" para crear una nueva configuración de tiempo.
+                Complete el tipo de cron y las horas de inicio y fin.
+            </p>
+
+            <h3 class="text-xl font-medium text-gray-700 mb-3">Modificar Cron</h3>
+            <p class="text-gray-600 mb-4">
+                Seleccione un cron de la lista haciendo clic sobre él, luego presione "Modificar Cron"
+                para editar sus propiedades.
+            </p>
+
+            <h3 class="text-xl font-medium text-gray-700 mb-3">Eliminar Cron</h3>
+            <p class="text-gray-600 mb-4">
+                Seleccione un cron de la lista y presione "Eliminar Cron" para removerlo del sistema.
+                Esta acción no se puede deshacer.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Consideraciones Importantes</h2>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <li>No puede haber dos cron con el mismo tipo</li>
+                <li>Las horas deben ser válidas (00:00 a 23:59)</li>
+                <li>La hora de fin debe ser posterior a la hora de inicio</li>
+                <li>Los cambios surten efecto inmediatamente en el sistema</li>
+            </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Soporte Técnico</h2>
+            <p class="text-gray-600">
+                Si necesita asistencia adicional, contacte al soporte técnico a través del sistema
+                de mensajería o utilice la información de contacto disponible en el dashboard.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

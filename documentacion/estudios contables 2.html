@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo de Vencimientos Inteligentes - SaaS Contable</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        header { border-bottom: 3px solid #2c3e50; margin-bottom: 30px; padding-bottom: 10px; }
+        h1 { color: #2c3e50; font-size: 2.2em; margin-bottom: 5px; }
+        h2 { color: #2980b9; margin-top: 30px; border-left: 5px solid #2980b9; padding-left: 15px; }
+        h3 { color: #16a085; margin-top: 20px; }
+        p { margin-bottom: 15px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 25px 0; }
+        .feature-card { background: #f9f9f9; border: 1px solid #e1e4e8; padding: 20px; border-radius: 8px; transition: transform 0.2s; }
+        .feature-card:hover { transform: translateY(-5px); border-color: #2980b9; }
+        .ia-badge { background: #8e44ad; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; }
+        .diagram-container { background: #edf2f7; border: 2px dashed #cbd5e0; padding: 30px; text-align: center; border-radius: 10px; margin: 30px 0; }
+        .workflow-step { display: inline-block; background: white; border: 1px solid #2980b9; padding: 10px 15px; border-radius: 5px; margin: 10px; font-weight: bold; color: #2980b9; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #e1e4e8; }
+        th { background-color: #2980b9; color: white; }
+        .highlight { background-color: #fff3cd; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🤖 Módulo: Automatización de Vencimientos con IA</h1>
+        <p>Ampliación del SaaS para Estudios Contables y Profesionales</p>
+    </header>
+
+    <section>
+        <h2>1. El Concepto: "Zero-Data Entry" en Vencimientos</h2>
+        <p>El sistema elimina la carga manual de agendas fiscales. Mediante el uso de <strong>Inteligencia Artificial</strong> y web scraping (automatización de lectura de boletines oficiales), el SaaS se convierte en un monitor activo de las obligaciones del cliente.</p>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🏛️ Calendario Universal</h3>
+                <p>Sincronización con AFIP, Rentas Provinciales (AGIP, ARBA, etc.) y municipios. Incluye impuestos masivos y regímenes de información específicos.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📅 Obligaciones No Fiscales</h3>
+                <p>Presentación de balances ante IGJ, renovación de certificados PyME, libros societarios y vencimientos de auditorías externas.</p>
+            </div>
+            <div class="feature-card">
+                <h3><span class="ia-badge">IA</span> Mapeo Inteligente</h3>
+                <p>La IA lee la constancia de inscripción del cliente y le "asocia" automáticamente todos los vencimientos que le corresponden según su actividad y forma jurídica.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>2. Diagrama de Flujo: De la Norma a la Tarea</h2>
+        <p>A continuación se describe cómo la información legal se transforma en trabajo concreto para los empleados del estudio:</p>
+        
+        <div class="diagram-container">
+            <div class="workflow-step">1. Motor de Captura (Normativa Legal)</div>
+            <span style="font-size: 20px;">➔</span>
+            <div class="workflow-step">2. IA: Análisis y Clasificación de Fechas</div>
+            <span style="font-size: 20px;">➔</span>
+            <div class="workflow-step">3. Matching con Base de Clientes</div>
+            <span style="font-size: 20px;">➔</span>
+            <div class="workflow-step">4. Creación Automática de Proyectos/Tareas</div>
+        </div>
+        
+    </section>
+
+    <section>
+        <h2>3. Capacidades Avanzadas de la Inteligencia Artificial</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Función de IA</th>
+                    <th>Cómo funciona</th>
+                    <th>Valor para el Estudio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Análisis de Prórrogas</strong></td>
+                    <td>Escanea diariamente boletines oficiales y sitios de entes reguladores para detectar cambios de último momento.</td>
+                    <td><strong>Cero errores.</strong> El sistema ajusta la fecha de la tarea y avisa al equipo si hay una prórroga oficial.</td>
+                </tr>
+                <tr>
+                    <td><strong>Predicción de Carga</strong></td>
+                    <td>Analiza el volumen de clientes y la complejidad de sus impuestos para predecir si el personal actual podrá cumplir.</td>
+                    <td><strong>Gestión de Recursos.</strong> Permite redistribuir tareas antes de que el equipo se colapse.</td>
+                </tr>
+                <tr>
+                    <td><strong>Alertas de Omisión</strong></td>
+                    <td>Si un cliente cambia de categoría (ej: de Monotributista a Responsable Inscripto), la IA detecta el cambio en AFIP.</td>
+                    <td><strong>Reducción de Riesgo.</strong> Sugiere nuevas tareas de cumplimiento que el estudio no tenía mapeadas.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>4. Visualización para el Socio del Estudio</h2>
+        <p>El nivel jerárquico (Socios/Gerentes) dispone de un <strong>"Semáforo de Cumplimiento"</strong> global:</p>
+        <ul>
+            <li><strong>Rojo:</strong> Impuestos que vencen en <span class="highlight">48hs</span> con 0% de avance.</li>
+            <li><strong>Amarillo:</strong> Tareas en proceso pero con tiempos de ejecución (time tracking) superiores a lo estimado.</li>
+            <li><strong>Verde:</strong> Todo presentado y con acuse de recibo cargado en el sistema.</li>
+        </ul>
+        <div class="diagram-container">
+            <p><em>[Visualización sugerida: Dashboard con gráficos de torta por jurisdicción y barras de carga de trabajo por empleado]</em></p>
+        </div>
+        
+    </section>
+
+    <footer style="margin-top: 50px; text-align: center; font-size: 0.9em; color: #7f8c8d;">
+        <p>SaaS de Gestión Profesional v1.0 - Propuesta de Implementación IA para Estudios Contables</p>
+    </footer>
+</div>
+
+</body>
+</html>
